@@ -1,3 +1,4 @@
+using System.Reflection;
 using Project.Core;
 
 namespace TestProject;
@@ -32,5 +33,19 @@ public class Day1Tests
     {
         int calibrationValue = Day1Parser.GetCalibrationValue(line);
         Assert.That(calibrationValue, Is.EqualTo(expectedResult));
+    }
+
+    [Test]
+    public void ShouldGetSumOfCalibrationValues()
+    {
+        // Doesnt work yet because... it gotes to the bin folder, a.txt does not get copied over
+        // string currentDirectory = TestContext.CurrentContext.TestDirectory;
+        // string filePath = Path.Combine(currentDirectory, "a.txt");
+
+        string filePath = @"C:\Users\gersh\OneDrive\Documents\SelfProjects\advent-of-code-2023\TestProject\Day1\a.txt";
+
+        string[] lines = File.ReadAllLines(filePath);
+        int sum = Day1Parser.GetSumOfCalibrationValue(lines);
+        Assert.That(sum, Is.EqualTo(142));
     }
 }

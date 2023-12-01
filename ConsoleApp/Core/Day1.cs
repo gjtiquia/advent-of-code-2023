@@ -2,6 +2,16 @@ namespace Project.Core;
 
 public class Day1Parser
 {
+    public static int GetSumOfCalibrationValue(string[] lines)
+    {
+        int sum = 0;
+        foreach (string line in lines)
+        {
+            sum += GetCalibrationValue(line);
+        }
+        return sum;
+    }
+
     public static int GetCalibrationValue(string line)
     {
         int firstDigit = GetFirstDigit(line);
