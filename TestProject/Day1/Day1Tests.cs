@@ -23,4 +23,14 @@ public class Day1Tests
         int lastDigit = Day1Parser.GetLastDigit(line);
         Assert.That(lastDigit, Is.EqualTo(expectedResult));
     }
+
+    [TestCase("1abc2", 12)]
+    [TestCase("pqr3stu8vwx", 38)]
+    [TestCase("a1b2c3d4e5f", 15)]
+    [TestCase("treb7uchet", 77)]
+    public void ShouldGetCalibrationValue(string line, int expectedResult)
+    {
+        int calibrationValue = Day1Parser.GetCalibrationValue(line);
+        Assert.That(calibrationValue, Is.EqualTo(expectedResult));
+    }
 }

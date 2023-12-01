@@ -2,6 +2,14 @@ namespace Project.Core;
 
 public class Day1Parser
 {
+    public static int GetCalibrationValue(string line)
+    {
+        int firstDigit = GetFirstDigit(line);
+        int lastDigit = GetLastDigit(line);
+
+        return 10 * firstDigit + lastDigit;
+    }
+
     public static int GetFirstDigit(string line)
     {
         foreach (char c in line)
