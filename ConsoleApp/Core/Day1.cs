@@ -2,9 +2,9 @@ namespace Project.Core;
 
 public class Day1Parser
 {
-    public int GetFirstDigit(string input)
+    public static int GetFirstDigit(string line)
     {
-        foreach (char c in input)
+        foreach (char c in line)
         {
             if (char.IsDigit(c))
             {
