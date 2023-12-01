@@ -7,7 +7,8 @@ public class Day1Parser
         int sum = 0;
         foreach (string line in lines)
         {
-            sum += GetCalibrationValue(line);
+            int calibrationValue = GetCalibrationValue(line);
+            sum += calibrationValue;
         }
         return sum;
     }

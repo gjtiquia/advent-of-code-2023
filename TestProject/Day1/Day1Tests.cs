@@ -74,4 +74,31 @@ public class Day1Tests
         int lastDigit = Day1Parser.GetLastDigit(line);
         Assert.That(lastDigit, Is.EqualTo(expectedResult));
     }
+
+    [TestCase("two1nine", 29)]
+    [TestCase("eightwothree", 83)]
+    [TestCase("abcone2threexyz", 13)]
+    [TestCase("xtwone3four", 24)]
+    [TestCase("4nineeightseven2", 42)]
+    [TestCase("zoneight234", 14)]
+    [TestCase("7pqrstsixteen", 76)]
+    public void ShouldGetCalibrationValueWithSpelledOutLetters(string line, int expectedResult)
+    {
+        int calibrationValue = Day1Parser.GetCalibrationValue(line);
+        Assert.That(calibrationValue, Is.EqualTo(expectedResult));
+    }
+
+    [Test]
+    public void ShouldGetSumOfCalibrationValuesWithSpelledOutLetters()
+    {
+        // Doesnt work yet because... it gotes to the bin folder, a.txt does not get copied over
+        // string currentDirectory = TestContext.CurrentContext.TestDirectory;
+        // string filePath = Path.Combine(currentDirectory, "b.txt");
+
+        string filePath = @"C:\Users\gersh\OneDrive\Documents\SelfProjects\advent-of-code-2023\TestProject\Day1\b.txt";
+
+        string[] lines = File.ReadAllLines(filePath);
+        int sum = Day1Parser.GetSumOfCalibrationValue(lines);
+        Assert.That(sum, Is.EqualTo(281));
+    }
 }
