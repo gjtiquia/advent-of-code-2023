@@ -88,6 +88,38 @@ public class Day1Tests
         Assert.That(calibrationValue, Is.EqualTo(expectedResult));
     }
 
+    [TestCase("eighthree", 83)]
+    [TestCase("sevenine", 79)]
+    // Not including because... input doesnt include these lol
+    // Also not including because this would invalidate given case treb7uchet = 77
+    // [TestCase("one", 1)]
+    // [TestCase("two", 2)]
+    // [TestCase("three", 3)]
+    // [TestCase("four", 4)]
+    // [TestCase("five", 5)]
+    // [TestCase("six", 6)]
+    // [TestCase("seven", 7)]
+    // [TestCase("eight", 8)]
+    // [TestCase("nine", 9)]
+    [TestCase("twone", 21)]
+    [TestCase("eightwo", 82)]
+    [TestCase("nineight", 98)]
+    [TestCase("eighthree", 83)]
+    [TestCase("nineight", 98)]
+    [TestCase("nineeight", 98)]
+    // [TestCase("eeeight", 8)] // Failing, and not including because would invalidate given case treb7uchet = 77
+    [TestCase("oooneeone", 11)]
+    [TestCase("eightxh23eight", 88)]
+    public void ShouldGetCalibrationValueFromRedditHint(string line, int expectedResult)
+    {
+        // https://www.reddit.com/r/adventofcode/comments/1884fpl/2023_day_1for_those_who_stuck_on_part_2/
+        // https://www.reddit.com/r/adventofcode/comments/1885pt4/2023_day_01_part_2_test_cases_that_helped_me/
+        // https://www.reddit.com/r/adventofcode/comments/1885lxp/part_two/
+
+        int calibrationValue = Day1Parser.GetCalibrationValue(line);
+        Assert.That(calibrationValue, Is.EqualTo(expectedResult));
+    }
+
     [Test]
     public void ShouldGetSumOfCalibrationValuesWithSpelledOutLetters()
     {

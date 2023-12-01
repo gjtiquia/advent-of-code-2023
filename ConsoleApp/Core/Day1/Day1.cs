@@ -15,13 +15,22 @@ public class Day1Parser
 
     public static int GetCalibrationValue(string line)
     {
-        int firstDigit = GetFirstDigit(line);
-        int lastDigit = GetLastDigit(line);
+        int firstDigit = GetFirstDigit(line, out int firstDigitIndex);
+        int lastDigit = GetLastDigit(line, out int lastDigitIndex);
+
+        // Wrong... would fail treb7uchet = 77, a given case
+        // if (firstDigitIndex == lastDigitIndex)
+        //     return firstDigit;
 
         return 10 * firstDigit + lastDigit;
     }
 
     public static int GetFirstDigit(string line)
+    {
+        return GetFirstDigit(line, out int _);
+    }
+
+    public static int GetFirstDigit(string line, out int firstDigitIndex)
     {
         bool hasWordDigit = false;
         int wordIndex = -1;
@@ -63,25 +72,40 @@ public class Day1Parser
             throw new Exception("No digits in input string!");
 
         if (hasWordDigit && !hasNumericDigit)
+        {
+            firstDigitIndex = wordIndex;
             return wordDigit;
+        }
 
         if (!hasWordDigit && hasNumericDigit)
+        {
+            firstDigitIndex = numericIndex;
             return numericDigit;
+        }
 
         if (wordIndex < numericIndex)
+        {
+            firstDigitIndex = wordIndex;
             return wordDigit;
+        }
 
+        firstDigitIndex = numericIndex;
         return numericDigit;
     }
 
     public static int GetLastDigit(string line)
+    {
+        return GetLastDigit(line, out int _);
+    }
+
+    private static int GetLastDigit(string line, out int lastDigitIndex)
     {
         bool hasWordDigit = false;
         int wordIndex = -1;
         int wordDigit = -1;
         foreach (var (word, digit) in _spelledOutNumbers)
         {
-            int index = line.IndexOf(word);
+            int index = line.LastIndexOf(word);
             if (index == -1) continue;
 
             if (!hasWordDigit)
@@ -116,14 +140,24 @@ public class Day1Parser
             throw new Exception("No digits in input string!");
 
         if (hasWordDigit && !hasNumericDigit)
+        {
+            lastDigitIndex = wordIndex;
             return wordDigit;
+        }
 
         if (!hasWordDigit && hasNumericDigit)
+        {
+            lastDigitIndex = numericIndex;
             return numericDigit;
+        }
 
-        if (wordIndex > numericIndex)
+        if (wordIndex >= numericIndex)
+        {
+            lastDigitIndex = wordIndex;
             return wordDigit;
+        }
 
+        lastDigitIndex = numericIndex;
         return numericDigit;
     }
 
