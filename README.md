@@ -7,7 +7,7 @@ In root directory,
 Run Program.cs
 
 ```bash
-dotnet run --project ConsoleApp
+dotnet run --project AdventOfCode
 ```
 
 Run all tests

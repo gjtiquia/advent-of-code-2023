@@ -1,7 +1,4 @@
-using System.Reflection;
-using Project.Core;
-
-namespace TestProject;
+namespace UnitTests;
 
 public class Day1Tests
 {
@@ -42,7 +39,7 @@ public class Day1Tests
         // string currentDirectory = TestContext.CurrentContext.TestDirectory;
         // string filePath = Path.Combine(currentDirectory, "a.txt");
 
-        string filePath = @"C:\Users\gersh\OneDrive\Documents\SelfProjects\advent-of-code-2023\TestProject\Day1\a.txt";
+        string filePath = @"C:\Users\gersh\OneDrive\Documents\SelfProjects\advent-of-code-2023\UnitTests\Day1\a.txt";
 
         string[] lines = File.ReadAllLines(filePath);
         int sum = Day1Parser.GetSumOfCalibrationValue(lines);
@@ -127,7 +124,7 @@ public class Day1Tests
         // string currentDirectory = TestContext.CurrentContext.TestDirectory;
         // string filePath = Path.Combine(currentDirectory, "b.txt");
 
-        string filePath = @"C:\Users\gersh\OneDrive\Documents\SelfProjects\advent-of-code-2023\TestProject\Day1\b.txt";
+        string filePath = @"C:\Users\gersh\OneDrive\Documents\SelfProjects\advent-of-code-2023\UnitTests\Day1\b.txt";
 
         string[] lines = File.ReadAllLines(filePath);
         int sum = Day1Parser.GetSumOfCalibrationValue(lines);
