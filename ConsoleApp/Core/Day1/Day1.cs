@@ -75,16 +75,55 @@ public class Day1Parser
 
     public static int GetLastDigit(string line)
     {
-        for (int i = line.Length - 1; i >= 0; i--)
+        bool hasWordDigit = false;
+        int wordIndex = -1;
+        int wordDigit = -1;
+        foreach (var (word, digit) in _spelledOutNumbers)
         {
-            char c = line[i];
-            if (char.IsDigit(c))
+            int index = line.IndexOf(word);
+            if (index == -1) continue;
+
+            if (!hasWordDigit)
             {
-                return (int)char.GetNumericValue(c);
+                hasWordDigit = true;
+                wordIndex = index;
+                wordDigit = digit;
+            }
+            else if (index > wordIndex)
+            {
+                wordIndex = index;
+                wordDigit = digit;
             }
         }
 
-        throw new Exception("No digits in input string!");
+        bool hasNumericDigit = false;
+        int numericIndex = -1;
+        int numericDigit = -1;
+        for (int i = line.Length - 1; i >= 0; i--)
+        {
+            char c = line[i];
+            if (!char.IsDigit(c)) continue;
+
+            hasNumericDigit = true;
+            numericIndex = i;
+            numericDigit = (int)char.GetNumericValue(c);
+
+            break;
+        }
+
+        if (!hasWordDigit && !hasNumericDigit)
+            throw new Exception("No digits in input string!");
+
+        if (hasWordDigit && !hasNumericDigit)
+            return wordDigit;
+
+        if (!hasWordDigit && hasNumericDigit)
+            return numericDigit;
+
+        if (wordIndex > numericIndex)
+            return wordDigit;
+
+        return numericDigit;
     }
 
     private static readonly Dictionary<string, int> _spelledOutNumbers = new()

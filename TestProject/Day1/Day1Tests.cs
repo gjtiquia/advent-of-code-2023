@@ -63,6 +63,12 @@ public class Day1Tests
     }
 
     [TestCase("two1nine", 9)]
+    [TestCase("eightwothree", 3)]
+    [TestCase("abcone2threexyz", 3)]
+    [TestCase("xtwone3four", 4)]
+    [TestCase("4nineeightseven2", 2)]
+    [TestCase("zoneight234", 4)]
+    [TestCase("7pqrstsixteen", 6)]
     public void ShouldGetTheLastDigitWithSpelledOutLetters(string line, int expectedResult)
     {
         int lastDigit = Day1Parser.GetLastDigit(line);
