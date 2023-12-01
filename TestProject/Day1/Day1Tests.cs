@@ -14,5 +14,13 @@ public class Day1Tests
         Assert.That(firstDigit, Is.EqualTo(expectedResult));
     }
 
-
+    [TestCase("1abc2", 2)]
+    [TestCase("pqr3stu8vwx", 8)]
+    [TestCase("a1b2c3d4e5f", 5)]
+    [TestCase("treb7uchet", 7)]
+    public void ShouldGetTheLastDigit(string line, int expectedResult)
+    {
+        int lastDigit = Day1Parser.GetLastDigit(line);
+        Assert.That(lastDigit, Is.EqualTo(expectedResult));
+    }
 }
