@@ -35,11 +35,9 @@ public class Day1Tests
     [Test]
     public void ShouldGetSumOfCalibrationValues()
     {
-        // Doesnt work yet because... it gotes to the bin folder, a.txt does not get copied over
-        // string currentDirectory = TestContext.CurrentContext.TestDirectory;
-        // string filePath = Path.Combine(currentDirectory, "a.txt");
-
-        string filePath = @"C:\Users\gersh\OneDrive\Documents\SelfProjects\advent-of-code-2023\UnitTests\Day1\a.txt";
+        // Specified in .csproj to include and copy to bin folder where the test is executed
+        string currentDirectory = TestContext.CurrentContext.TestDirectory;
+        string filePath = Path.Combine(currentDirectory, "Day1", "a.txt");
 
         string[] lines = File.ReadAllLines(filePath);
         int sum = Day1Parser.GetSumOfCalibrationValue(lines);
@@ -120,11 +118,9 @@ public class Day1Tests
     [Test]
     public void ShouldGetSumOfCalibrationValuesWithSpelledOutLetters()
     {
-        // Doesnt work yet because... it gotes to the bin folder, a.txt does not get copied over
-        // string currentDirectory = TestContext.CurrentContext.TestDirectory;
-        // string filePath = Path.Combine(currentDirectory, "b.txt");
-
-        string filePath = @"C:\Users\gersh\OneDrive\Documents\SelfProjects\advent-of-code-2023\UnitTests\Day1\b.txt";
+        // Specified in .csproj to include and copy to bin folder where the test is executed
+        string currentDirectory = TestContext.CurrentContext.TestDirectory;
+        string filePath = Path.Combine(currentDirectory, "Day1", "b.txt");
 
         string[] lines = File.ReadAllLines(filePath);
         int sum = Day1Parser.GetSumOfCalibrationValue(lines);
