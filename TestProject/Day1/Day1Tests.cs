@@ -48,4 +48,24 @@ public class Day1Tests
         int sum = Day1Parser.GetSumOfCalibrationValue(lines);
         Assert.That(sum, Is.EqualTo(142));
     }
+
+    [TestCase("two1nine", 2)]
+    [TestCase("eightwothree", 8)]
+    [TestCase("abcone2threexyz", 1)]
+    [TestCase("xtwone3four", 2)]
+    [TestCase("4nineeightseven2", 4)]
+    [TestCase("zoneight234", 1)]
+    [TestCase("7pqrstsixteen", 7)]
+    public void ShouldGetTheFirstDigitWithSpelledOutLetters(string line, int expectedResult)
+    {
+        int firstDigit = Day1Parser.GetFirstDigit(line);
+        Assert.That(firstDigit, Is.EqualTo(expectedResult));
+    }
+
+    [TestCase("two1nine", 9)]
+    public void ShouldGetTheLastDigitWithSpelledOutLetters(string line, int expectedResult)
+    {
+        int lastDigit = Day1Parser.GetLastDigit(line);
+        Assert.That(lastDigit, Is.EqualTo(expectedResult));
+    }
 }
