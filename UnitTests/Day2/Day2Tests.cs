@@ -33,12 +33,33 @@ public class Day2Tests
     [TestCase("3 blue", 3, "blue")]
     public void ShouldGetNumberAndColor(string line, int targetNumber, string targetColor)
     {
-        string[] splitLines = Day2Parser.SplitAndTrim(" ", line);
-        int number = int.Parse(splitLines[0]);
-        string color = splitLines[1];
+        (string color, int number) = Day2Parser.GetColorAndNumber(line);
 
         Assert.That(number, Is.EqualTo(targetNumber));
         Assert.That(color, Is.EqualTo(targetColor));
+    }
+
+    [Test]
+    public void ShouldParseIntoDictionary()
+    {
+        string line = "3 blue, 4 red";
+        Dictionary<string, int> cubeDictionary = Day2Parser.GetCubeDictionary(line);
+
+        Dictionary<string, int> targetDictionary = new()
+        {
+            {"red", 4},
+            {"blue", 3}
+        };
+
+        AssertDictionaryAreEqual(cubeDictionary, targetDictionary);
+    }
+
+    [TestCase("3 blue, 4 red", "12 red, 13 green, 14 blue", true)]
+    [TestCase("8 green, 6 blue, 20 red", "12 red, 13 green, 14 blue", false)]
+    [Ignore("TODO")]
+    public void ShouldDetermineIfGameIsPossible(string randomCubes, string configuration, bool targetIsPossible)
+    {
+        Assert.IsTrue(false);
     }
 
     private void AssertThatLinesAreEqual(string[] lines, string[] targetLines)
@@ -47,6 +68,17 @@ public class Day2Tests
         for (int i = 0; i < lines.Length; i++)
         {
             Assert.That(lines[i], Is.EqualTo(targetLines[i]));
+        }
+    }
+
+    private void AssertDictionaryAreEqual<K, V>(Dictionary<K, V> dictionary, Dictionary<K, V> targetDictionary) where K : notnull
+    {
+        Assert.That(dictionary.Count, Is.EqualTo(targetDictionary.Count));
+
+        foreach (var (key, value) in targetDictionary)
+        {
+            Assert.IsTrue(dictionary.ContainsKey(key));
+            Assert.That(dictionary[key], Is.EqualTo(value));
         }
     }
 }
@@ -62,5 +94,28 @@ public class Day2Parser
     {
         string[] splitLines = line.Split(" ");
         return int.Parse(splitLines[1]);
+    }
+
+    public static Dictionary<string, int> GetCubeDictionary(string line)
+    {
+        Dictionary<string, int> cubeDictionary = new Dictionary<string, int>();
+
+        string[] lines = SplitAndTrim(",", line);
+        foreach (string infoLine in lines)
+        {
+            (string color, int number) = GetColorAndNumber(infoLine);
+            cubeDictionary.Add(color, number);
+        }
+
+        return cubeDictionary;
+    }
+
+    public static (string, int) GetColorAndNumber(string line)
+    {
+        string[] splitLines = Day2Parser.SplitAndTrim(" ", line);
+        int number = int.Parse(splitLines[0]);
+        string color = splitLines[1];
+
+        return (color, number);
     }
 }
