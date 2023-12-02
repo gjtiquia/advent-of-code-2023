@@ -1,5 +1,31 @@
 public class Day2Parser
 {
+    public static Dictionary<string, int> GetMinimumConfigurationFromGame(string gameLine)
+    {
+        Dictionary<string, int> minimumConfiguration = new Dictionary<string, int>();
+
+        string[] cubeSets = SplitAndTrim(";", gameLine);
+        foreach (string cubeSet in cubeSets)
+        {
+            Dictionary<string, int> cubeSetDictionary = GetCubeSetDictionary(cubeSet);
+            foreach (var (color, number) in cubeSetDictionary)
+            {
+                if (!minimumConfiguration.ContainsKey(color))
+                {
+                    minimumConfiguration.Add(color, number);
+                }
+                else
+                {
+                    int currentNumber = minimumConfiguration[color];
+                    if (number > currentNumber)
+                        minimumConfiguration[color] = number;
+                }
+            }
+        }
+
+        return minimumConfiguration;
+    }
+
     public static int GetSumOfPossibleGameIDs(string configuration, string[] lines)
     {
         int sum = 0;
