@@ -17,33 +17,33 @@ public class Day2Tests
     }
 
     [TestCase("3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green", "3 blue, 4 red", "1 red, 2 green, 6 blue", "2 green")]
-    public void ShouldSplitBySemiColon(string line, params string[] lines)
+    public void ShouldSplitGameToCubeSets(string game, params string[] targetCubeSets)
     {
-        string[] splitLines = Day2Parser.SplitAndTrim(";", line);
-        AssertThatLinesAreEqual(splitLines, lines);
+        string[] sets = Day2Parser.SplitAndTrim(";", game);
+        AssertThatLinesAreEqual(sets, targetCubeSets);
     }
 
     [TestCase("3 blue, 4 red", "3 blue", "4 red")]
-    public void ShouldSplitByComma(string line, params string[] lines)
+    public void ShouldSplitCubeSetToCubes(string cubeSet, params string[] cubes)
     {
-        string[] splitLines = Day2Parser.SplitAndTrim(",", line);
-        AssertThatLinesAreEqual(splitLines, lines);
+        string[] splitLines = Day2Parser.SplitAndTrim(",", cubeSet);
+        AssertThatLinesAreEqual(splitLines, cubes);
     }
 
     [TestCase("3 blue", 3, "blue")]
-    public void ShouldGetNumberAndColor(string line, int targetNumber, string targetColor)
+    public void ShouldGetNumberAndColor(string cubes, int targetNumber, string targetColor)
     {
-        (string color, int number) = Day2Parser.GetColorAndNumber(line);
+        (string color, int number) = Day2Parser.GetColorAndNumberFromCubes(cubes);
 
         Assert.That(number, Is.EqualTo(targetNumber));
         Assert.That(color, Is.EqualTo(targetColor));
     }
 
     [Test]
-    public void ShouldParseIntoDictionary()
+    public void ShouldParseCubeSetIntoDictionary()
     {
-        string line = "3 blue, 4 red";
-        Dictionary<string, int> cubeDictionary = Day2Parser.GetCubeDictionary(line);
+        string set = "3 blue, 4 red";
+        Dictionary<string, int> cubeSetDictionary = Day2Parser.GetCubeSetDictionary(set);
 
         Dictionary<string, int> targetDictionary = new()
         {
@@ -51,14 +51,22 @@ public class Day2Tests
             {"blue", 3}
         };
 
-        AssertDictionaryAreEqual(cubeDictionary, targetDictionary);
+        AssertDictionaryAreEqual(cubeSetDictionary, targetDictionary);
     }
 
     [TestCase("3 blue, 4 red", "12 red, 13 green, 14 blue", true)]
     [TestCase("8 green, 6 blue, 20 red", "12 red, 13 green, 14 blue", false)]
     public void ShouldDetermineIfSetIsPossible(string set, string configuration, bool targetIsPossible)
     {
-        bool isPossible = Day2Parser.IsSetPossible(set, configuration);
+        bool isPossible = Day2Parser.IsCubeSetPossible(set, configuration);
+        Assert.That(targetIsPossible, Is.EqualTo(isPossible));
+    }
+
+    [TestCase("3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green", "12 red, 13 green, 14 blue", true)]
+    [TestCase("8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red", "12 red, 13 green, 14 blue", false)]
+    public void ShouldDetermineIfGameIsPossible(string game, string configuration, bool targetIsPossible)
+    {
+        bool isPossible = Day2Parser.IsGamePossible(game, configuration);
         Assert.That(targetIsPossible, Is.EqualTo(isPossible));
     }
 
@@ -85,12 +93,25 @@ public class Day2Tests
 
 public class Day2Parser
 {
-    public static bool IsSetPossible(string set, string configuration)
+    public static bool IsGamePossible(string game, string configuration)
     {
-        Dictionary<string, int> setDictionary = GetCubeDictionary(set);
-        Dictionary<string, int> configurationDictionary = GetCubeDictionary(configuration);
+        string[] cubeSets = SplitAndTrim(";", game);
+        foreach (string cubeSet in cubeSets)
+        {
+            bool isPossible = IsCubeSetPossible(cubeSet, configuration);
+            if (!isPossible)
+                return false;
+        }
 
-        foreach (var (color, number) in setDictionary)
+        return true;
+    }
+
+    public static bool IsCubeSetPossible(string cubeSet, string configuration)
+    {
+        Dictionary<string, int> cubeSetDictionary = GetCubeSetDictionary(cubeSet);
+        Dictionary<string, int> configurationDictionary = GetCubeSetDictionary(configuration);
+
+        foreach (var (color, number) in cubeSetDictionary)
         {
             int maxNumber = configurationDictionary[color];
             if (number > maxNumber)
@@ -106,21 +127,21 @@ public class Day2Parser
         return int.Parse(splitLines[1]);
     }
 
-    public static Dictionary<string, int> GetCubeDictionary(string line)
+    public static Dictionary<string, int> GetCubeSetDictionary(string line)
     {
         Dictionary<string, int> cubeDictionary = new Dictionary<string, int>();
 
         string[] lines = SplitAndTrim(",", line);
         foreach (string infoLine in lines)
         {
-            (string color, int number) = GetColorAndNumber(infoLine);
+            (string color, int number) = GetColorAndNumberFromCubes(infoLine);
             cubeDictionary.Add(color, number);
         }
 
         return cubeDictionary;
     }
 
-    public static (string, int) GetColorAndNumber(string line)
+    public static (string, int) GetColorAndNumberFromCubes(string line)
     {
         string[] splitLines = SplitAndTrim(" ", line);
         int number = int.Parse(splitLines[0]);
