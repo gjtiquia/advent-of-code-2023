@@ -6,12 +6,7 @@ public class Day2Tests
     public void ShouldSplitByColon(string line, params string[] lines)
     {
         string[] splitLines = Day2Parser.SplitByColon(line);
-
-        Assert.That(splitLines.Length, Is.EqualTo(lines.Length));
-        for (int i = 0; i < splitLines.Length; i++)
-        {
-            Assert.That(splitLines[i], Is.EqualTo(lines[i]));
-        }
+        AssertThatLinesAreEqual(splitLines, lines);
     }
 
     [TestCase("Game 1", 1)]
@@ -19,6 +14,22 @@ public class Day2Tests
     {
         int id = Day2Parser.GetGameID(line);
         Assert.That(id, Is.EqualTo(targetID));
+    }
+
+    [TestCase("3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green", "3 blue, 4 red", "1 red, 2 green, 6 blue", "2 green")]
+    public void ShouldSplitBySemiColon(string line, params string[] lines)
+    {
+        string[] splitLines = Day2Parser.SplitBySemiColon(line);
+        AssertThatLinesAreEqual(splitLines, lines);
+    }
+
+    private void AssertThatLinesAreEqual(string[] lines, string[] targetLines)
+    {
+        Assert.That(lines.Length, Is.EqualTo(targetLines.Length));
+        for (int i = 0; i < lines.Length; i++)
+        {
+            Assert.That(lines[i], Is.EqualTo(targetLines[i]));
+        }
     }
 }
 
@@ -33,5 +44,10 @@ public class Day2Parser
     {
         string[] splitLines = line.Split(" ");
         return int.Parse(splitLines[1]);
+    }
+
+    public static string[] SplitBySemiColon(string line)
+    {
+        return line.Split(";").Select(x => x.Trim()).ToArray();
     }
 }
