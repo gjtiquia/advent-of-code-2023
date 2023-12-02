@@ -8,7 +8,7 @@ This repository is my attempt at the Advent of Code 2023 with C# using the .Net 
 
 Pre-requisites: Have the .Net 8.0 SDK installed on your local machine.
 
-Run `/AdventOfCode/Program.cs`
+Run [`/AdventOfCode/Program.cs`](./AdventOfCode/Program.cs)
 
 ```bash
 dotnet run --project AdventOfCode
