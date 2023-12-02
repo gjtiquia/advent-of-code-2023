@@ -1,10 +1,24 @@
 public class Day2Parser
 {
+    public static int GetSumOfPowerOfGames(string[] gameLines)
+    {
+        int sum = 0;
+        foreach (string game in gameLines)
+        {
+            sum += GetPowerFromGame(game);
+        }
+
+        return sum;
+    }
+
     public static int GetPowerFromGame(string gameLine)
     {
         int power = 1;
 
-        Dictionary<string, int> minimumConfiguration = GetMinimumConfigurationFromGame(gameLine);
+        string[] splitLines = SplitAndTrim(":", gameLine);
+        string game = splitLines[1];
+
+        Dictionary<string, int> minimumConfiguration = GetMinimumConfigurationFromGame(game);
         foreach (var (color, number) in minimumConfiguration)
         {
             power *= number;

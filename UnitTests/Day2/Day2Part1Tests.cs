@@ -75,7 +75,7 @@ public class Day2Part1Tests : Day2Tests
     {
         // Specified in .csproj to include and copy to bin folder where the test is executed
         string currentDirectory = TestContext.CurrentContext.TestDirectory;
-        string filePath = Path.Combine(currentDirectory, "Day2", "a.txt");
+        string filePath = Path.Combine(currentDirectory, "Day2", "input.txt");
 
         string[] lines = File.ReadAllLines(filePath);
         int sum = Day2Parser.GetSumOfPossibleGameIDs(configuration, lines);
