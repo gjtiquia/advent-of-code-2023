@@ -56,10 +56,10 @@ public class Day2Tests
 
     [TestCase("3 blue, 4 red", "12 red, 13 green, 14 blue", true)]
     [TestCase("8 green, 6 blue, 20 red", "12 red, 13 green, 14 blue", false)]
-    [Ignore("TODO")]
-    public void ShouldDetermineIfGameIsPossible(string randomCubes, string configuration, bool targetIsPossible)
+    public void ShouldDetermineIfSetIsPossible(string set, string configuration, bool targetIsPossible)
     {
-        Assert.IsTrue(false);
+        bool isPossible = Day2Parser.IsSetPossible(set, configuration);
+        Assert.That(targetIsPossible, Is.EqualTo(isPossible));
     }
 
     private void AssertThatLinesAreEqual(string[] lines, string[] targetLines)
@@ -85,9 +85,19 @@ public class Day2Tests
 
 public class Day2Parser
 {
-    public static string[] SplitAndTrim(string seperator, string line)
+    public static bool IsSetPossible(string set, string configuration)
     {
-        return line.Split(seperator).Select(x => x.Trim()).ToArray();
+        Dictionary<string, int> setDictionary = GetCubeDictionary(set);
+        Dictionary<string, int> configurationDictionary = GetCubeDictionary(configuration);
+
+        foreach (var (color, number) in setDictionary)
+        {
+            int maxNumber = configurationDictionary[color];
+            if (number > maxNumber)
+                return false;
+        }
+
+        return true;
     }
 
     public static int GetGameID(string line)
@@ -112,10 +122,15 @@ public class Day2Parser
 
     public static (string, int) GetColorAndNumber(string line)
     {
-        string[] splitLines = Day2Parser.SplitAndTrim(" ", line);
+        string[] splitLines = SplitAndTrim(" ", line);
         int number = int.Parse(splitLines[0]);
         string color = splitLines[1];
 
         return (color, number);
+    }
+
+    public static string[] SplitAndTrim(string seperator, string line)
+    {
+        return line.Split(seperator).Select(x => x.Trim()).ToArray();
     }
 }
