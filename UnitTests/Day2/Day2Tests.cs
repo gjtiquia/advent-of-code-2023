@@ -5,7 +5,7 @@ public class Day2Tests
     [TestCase("Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green", "Game 1", "3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green")]
     public void ShouldSplitByColon(string line, params string[] lines)
     {
-        string[] splitLines = Day2Parser.SplitByColon(line);
+        string[] splitLines = Day2Parser.SplitAndTrim(":", line);
         AssertThatLinesAreEqual(splitLines, lines);
     }
 
@@ -19,8 +19,26 @@ public class Day2Tests
     [TestCase("3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green", "3 blue, 4 red", "1 red, 2 green, 6 blue", "2 green")]
     public void ShouldSplitBySemiColon(string line, params string[] lines)
     {
-        string[] splitLines = Day2Parser.SplitBySemiColon(line);
+        string[] splitLines = Day2Parser.SplitAndTrim(";", line);
         AssertThatLinesAreEqual(splitLines, lines);
+    }
+
+    [TestCase("3 blue, 4 red", "3 blue", "4 red")]
+    public void ShouldSplitByComma(string line, params string[] lines)
+    {
+        string[] splitLines = Day2Parser.SplitAndTrim(",", line);
+        AssertThatLinesAreEqual(splitLines, lines);
+    }
+
+    [TestCase("3 blue", 3, "blue")]
+    public void ShouldGetNumberAndColor(string line, int targetNumber, string targetColor)
+    {
+        string[] splitLines = Day2Parser.SplitAndTrim(" ", line);
+        int number = int.Parse(splitLines[0]);
+        string color = splitLines[1];
+
+        Assert.That(number, Is.EqualTo(targetNumber));
+        Assert.That(color, Is.EqualTo(targetColor));
     }
 
     private void AssertThatLinesAreEqual(string[] lines, string[] targetLines)
@@ -35,19 +53,14 @@ public class Day2Tests
 
 public class Day2Parser
 {
-    public static string[] SplitByColon(string line)
+    public static string[] SplitAndTrim(string seperator, string line)
     {
-        return line.Split(":").Select(x => x.Trim()).ToArray();
+        return line.Split(seperator).Select(x => x.Trim()).ToArray();
     }
 
     public static int GetGameID(string line)
     {
         string[] splitLines = line.Split(" ");
         return int.Parse(splitLines[1]);
-    }
-
-    public static string[] SplitBySemiColon(string line)
-    {
-        return line.Split(";").Select(x => x.Trim()).ToArray();
     }
 }
