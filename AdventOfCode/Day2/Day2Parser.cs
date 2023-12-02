@@ -1,5 +1,18 @@
 public class Day2Parser
 {
+    public static int GetPowerFromGame(string gameLine)
+    {
+        int power = 1;
+
+        Dictionary<string, int> minimumConfiguration = GetMinimumConfigurationFromGame(gameLine);
+        foreach (var (color, number) in minimumConfiguration)
+        {
+            power *= number;
+        }
+
+        return power;
+    }
+
     public static Dictionary<string, int> GetMinimumConfigurationFromGame(string gameLine)
     {
         Dictionary<string, int> minimumConfiguration = new Dictionary<string, int>();
