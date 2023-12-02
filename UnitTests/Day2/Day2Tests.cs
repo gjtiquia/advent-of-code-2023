@@ -70,6 +70,19 @@ public class Day2Tests
         Assert.That(targetIsPossible, Is.EqualTo(isPossible));
     }
 
+    [TestCase("12 red, 13 green, 14 blue", 8)]
+    public void ShouldGetSumOfGameIDsOfPossibleGames(string configuration, int targetSum)
+    {
+        // Specified in .csproj to include and copy to bin folder where the test is executed
+        string currentDirectory = TestContext.CurrentContext.TestDirectory;
+        string filePath = Path.Combine(currentDirectory, "Day2", "a.txt");
+
+        string[] lines = File.ReadAllLines(filePath);
+        int sum = Day2Parser.GetSumOfPossibleGameIDs(configuration, lines);
+
+        Assert.That(sum, Is.EqualTo(targetSum));
+    }
+
     private void AssertThatLinesAreEqual(string[] lines, string[] targetLines)
     {
         Assert.That(lines.Length, Is.EqualTo(targetLines.Length));
@@ -93,6 +106,26 @@ public class Day2Tests
 
 public class Day2Parser
 {
+    public static int GetSumOfPossibleGameIDs(string configuration, string[] lines)
+    {
+        int sum = 0;
+
+        foreach (string line in lines)
+        {
+            string[] splitLines = SplitAndTrim(":", line);
+            string gameInfo = splitLines[0];
+            string game = splitLines[1];
+
+            bool isGamePossible = IsGamePossible(game, configuration);
+            if (!isGamePossible) continue;
+
+            int gameID = GetGameID(gameInfo);
+            sum += gameID;
+        }
+
+        return sum;
+    }
+
     public static bool IsGamePossible(string game, string configuration)
     {
         string[] cubeSets = SplitAndTrim(";", game);
