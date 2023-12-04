@@ -1,6 +1,6 @@
 namespace UnitTests;
 
-public class Day3Tests
+public class Day3Part1Tests
 {
     [TestCase("467..114..", new int[] { })]
     [TestCase("...*......", new int[] { 3 })]
