@@ -1,5 +1,24 @@
 public class Day3Parser
 {
+    public static bool TryFindGearRatioOfGear(string topRow, string currentRow, string bottomRow, int gearIndex, out int gearRatio)
+    {
+        int partNumberCount = 0;
+        gearRatio = 1;
+
+        List<Dictionary<int, int>> adjacentNumbersToGear = FindAdjacentNumbersOfSymbol(topRow, currentRow, bottomRow, gearIndex);
+        foreach (Dictionary<int, int> row in adjacentNumbersToGear)
+        {
+            foreach (var (index, number) in row)
+            {
+                partNumberCount++;
+                gearRatio *= number;
+            }
+        }
+
+        // It is only a gear if it has exactly 2 part numbers
+        return partNumberCount == 2;
+    }
+
     public static int FindSumOfAllPartNumbers(string[] lines)
     {
         int sum = 0;
