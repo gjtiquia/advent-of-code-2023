@@ -119,10 +119,39 @@ public class Day3Tests
             Utilities.AssertDictionaryAreEqual(row, expectedRow);
         }
     }
+
+    [TestCase(4361)]
+    public void ShouldFindSumOfAllPartNumbers(int expectedSum)
+    {
+        // Specified in .csproj to include and copy to bin folder where the test is executed
+        string currentDirectory = TestContext.CurrentContext.TestDirectory;
+        string filePath = Path.Combine(currentDirectory, "Day3", "a.txt");
+
+        string[] lines = File.ReadAllLines(filePath);
+        int sum = Day3Parser.FindSumOfAllPartNumbers(lines);
+
+        Assert.That(sum, Is.EqualTo(expectedSum));
+    }
 }
 
 public class Day3Parser
 {
+    public static int FindSumOfAllPartNumbers(string[] lines)
+    {
+        int sum = 0;
+
+        List<Dictionary<int, int>> adjacentNumbers = FindNumbersAdjacentToAllSymbols(lines);
+        foreach (Dictionary<int, int> row in adjacentNumbers)
+        {
+            foreach (var (index, number) in row)
+            {
+                sum += number;
+            }
+        }
+
+        return sum;
+    }
+
     public static List<Dictionary<int, int>> FindNumbersAdjacentToAllSymbols(string[] lines)
     {
         List<Dictionary<int, int>> adjacentNumbers = [];
