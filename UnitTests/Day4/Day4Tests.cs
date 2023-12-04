@@ -38,4 +38,17 @@ public class Day4Tests
 
         Assert.That(sum, Is.EqualTo(expectedSum));
     }
+
+    [TestCase(30)]
+    public void GetTotalScratchcards(int expectedCount)
+    {
+        // Specified in .csproj to include and copy to bin folder where the test is executed
+        string currentDirectory = TestContext.CurrentContext.TestDirectory;
+        string filePath = Path.Combine(currentDirectory, "Day4", "input.txt");
+
+        string[] lines = File.ReadAllLines(filePath);
+        int count = Day4Parser.GetTotalScratchcards(lines);
+
+        Assert.That(count, Is.EqualTo(expectedCount));
+    }
 }

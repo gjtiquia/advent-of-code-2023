@@ -16,21 +16,29 @@ public class Card
         (WinningNumbers, CardNumbers) = GetNumberArraysFromRightLine(rightLine);
     }
 
-    public int GetPointValue()
+    public int GetMatchingNumberCount()
     {
-        int winningNumberCount = 0;
+        int matchesCount = 0;
+
         foreach (int cardNumber in CardNumbers)
         {
             if (WinningNumbers.Contains(cardNumber))
             {
-                winningNumberCount++;
+                matchesCount++;
             }
         }
 
-        if (winningNumberCount == 0)
+        return matchesCount;
+    }
+
+    public int GetPointValue()
+    {
+        int matchesCount = GetMatchingNumberCount();
+
+        if (matchesCount == 0)
             return 0;
 
-        return (int)Math.Pow(2, winningNumberCount - 1);
+        return (int)Math.Pow(2, matchesCount - 1);
     }
 
     private static int GetIDFromLeftLine(string leftLine)
