@@ -284,4 +284,18 @@ public class Day3Parser
 
         return indexes.ToArray();
     }
+
+    public static int[] FindIndexesOfGear(string line)
+    {
+        List<int> indexes = new List<int>();
+
+        for (int i = 0; i < line.Length; i++)
+        {
+            char c = line[i];
+            if (c == char.Parse("*"))
+                indexes.Add(i);
+        }
+
+        return indexes.ToArray();
+    }
 }
