@@ -51,7 +51,7 @@ public class Day2Part1Tests : Day2Tests
             {"blue", 3}
         };
 
-        AssertDictionaryAreEqual(cubeSetDictionary, targetDictionary);
+        Utilities.AssertDictionaryAreEqual(cubeSetDictionary, targetDictionary);
     }
 
     [TestCase("3 blue, 4 red", "12 red, 13 green, 14 blue", true)]
