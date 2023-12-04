@@ -16,3 +16,5 @@ Console.WriteLine($"Day 2 Part 2: {Day2Parser.GetSumOfPowerOfGames(day2Input)}")
 // Day3
 string[] day3Input = File.ReadAllLines($"{baseDirectory}/Day3/input.txt");
 Console.WriteLine($"Day 3 Part 1: {Day3Parser.FindSumOfAllPartNumbers(day3Input)}");
+Console.WriteLine($"Day 3 Part 2: {Day3Parser.FindSumOfAllGearRatios(day3Input)}");
+
