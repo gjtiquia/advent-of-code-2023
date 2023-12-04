@@ -14,6 +14,15 @@ public class Day4Tests
             Assert.That(card.CardNumbers, Is.EqualTo(cardNumbers));
         });
     }
+
+    [TestCase("Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53", 8)]
+    public void GetPointValueOfCard(string cardLine, int expectedPointValue)
+    {
+        Card card = new Card(cardLine);
+        int pointValue = card.GetPointValue();
+
+        Assert.That(pointValue, Is.EqualTo(expectedPointValue));
+    }
 }
 
 public class Card
@@ -30,6 +39,23 @@ public class Card
 
         ID = GetIDFromLeftLine(leftLine);
         (WinningNumbers, CardNumbers) = GetNumberArraysFromRightLine(rightLine);
+    }
+
+    public int GetPointValue()
+    {
+        int winningNumberCount = 0;
+        foreach (int cardNumber in CardNumbers)
+        {
+            if (WinningNumbers.Contains(cardNumber))
+            {
+                winningNumberCount++;
+            }
+        }
+
+        if (winningNumberCount == 0)
+            return 0;
+
+        return (int)Math.Pow(2, winningNumberCount - 1);
     }
 
     private static int GetIDFromLeftLine(string leftLine)
