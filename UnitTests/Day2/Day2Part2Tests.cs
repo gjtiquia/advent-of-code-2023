@@ -8,7 +8,7 @@ public class Day2Part2Tests : Day2Tests
         Dictionary<string, int> minimumConfiguration = Day2Parser.GetMinimumConfigurationFromGame(gameLine);
         Dictionary<string, int> targetConfiguration = Day2Parser.GetCubeSetDictionary(targetConfigurationLine);
 
-        Utilities.AssertDictionaryAreEqual(minimumConfiguration, targetConfiguration);
+        TestUtilities.AssertDictionaryAreEqual(minimumConfiguration, targetConfiguration);
     }
 
     [TestCase("Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green", 48)]

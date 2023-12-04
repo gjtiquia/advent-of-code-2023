@@ -1,6 +1,6 @@
 namespace UnitTests;
 
-public static class Utilities
+public static class TestUtilities
 {
     public static void AssertDictionaryAreEqual<K, V>(Dictionary<K, V> dictionary, Dictionary<K, V> targetDictionary) where K : notnull where V : notnull
     {

@@ -5,7 +5,7 @@ public class Day2Part1Tests : Day2Tests
     [TestCase("Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green", "Game 1", "3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green")]
     public void ShouldSplitByColon(string line, params string[] lines)
     {
-        string[] splitLines = Day2Parser.SplitAndTrim(":", line);
+        string[] splitLines = Utilities.SplitAndTrim(":", line);
         AssertThatLinesAreEqual(splitLines, lines);
     }
 
@@ -19,14 +19,14 @@ public class Day2Part1Tests : Day2Tests
     [TestCase("3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green", "3 blue, 4 red", "1 red, 2 green, 6 blue", "2 green")]
     public void ShouldSplitGameToCubeSets(string game, params string[] targetCubeSets)
     {
-        string[] sets = Day2Parser.SplitAndTrim(";", game);
+        string[] sets = Utilities.SplitAndTrim(";", game);
         AssertThatLinesAreEqual(sets, targetCubeSets);
     }
 
     [TestCase("3 blue, 4 red", "3 blue", "4 red")]
     public void ShouldSplitCubeSetToCubes(string cubeSet, params string[] cubes)
     {
-        string[] splitLines = Day2Parser.SplitAndTrim(",", cubeSet);
+        string[] splitLines = Utilities.SplitAndTrim(",", cubeSet);
         AssertThatLinesAreEqual(splitLines, cubes);
     }
 
@@ -51,7 +51,7 @@ public class Day2Part1Tests : Day2Tests
             {"blue", 3}
         };
 
-        Utilities.AssertDictionaryAreEqual(cubeSetDictionary, targetDictionary);
+        TestUtilities.AssertDictionaryAreEqual(cubeSetDictionary, targetDictionary);
     }
 
     [TestCase("3 blue, 4 red", "12 red, 13 green, 14 blue", true)]

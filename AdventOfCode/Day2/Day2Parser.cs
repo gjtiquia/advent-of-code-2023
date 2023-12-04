@@ -15,7 +15,7 @@ public class Day2Parser
     {
         int power = 1;
 
-        string[] splitLines = SplitAndTrim(":", gameLine);
+        string[] splitLines = Utilities.SplitAndTrim(":", gameLine);
         string game = splitLines[1];
 
         Dictionary<string, int> minimumConfiguration = GetMinimumConfigurationFromGame(game);
@@ -31,7 +31,7 @@ public class Day2Parser
     {
         Dictionary<string, int> minimumConfiguration = new Dictionary<string, int>();
 
-        string[] cubeSets = SplitAndTrim(";", gameLine);
+        string[] cubeSets = Utilities.SplitAndTrim(";", gameLine);
         foreach (string cubeSet in cubeSets)
         {
             Dictionary<string, int> cubeSetDictionary = GetCubeSetDictionary(cubeSet);
@@ -59,7 +59,7 @@ public class Day2Parser
 
         foreach (string line in lines)
         {
-            string[] splitLines = SplitAndTrim(":", line);
+            string[] splitLines = Utilities.SplitAndTrim(":", line);
             string gameInfo = splitLines[0];
             string game = splitLines[1];
 
@@ -75,7 +75,7 @@ public class Day2Parser
 
     public static bool IsGamePossible(string game, string configuration)
     {
-        string[] cubeSets = SplitAndTrim(";", game);
+        string[] cubeSets = Utilities.SplitAndTrim(";", game);
         foreach (string cubeSet in cubeSets)
         {
             bool isPossible = IsCubeSetPossible(cubeSet, configuration);
@@ -111,7 +111,7 @@ public class Day2Parser
     {
         Dictionary<string, int> cubeDictionary = new Dictionary<string, int>();
 
-        string[] lines = SplitAndTrim(",", line);
+        string[] lines = Utilities.SplitAndTrim(",", line);
         foreach (string infoLine in lines)
         {
             (string color, int number) = GetColorAndNumberFromCubes(infoLine);
@@ -123,15 +123,10 @@ public class Day2Parser
 
     public static (string, int) GetColorAndNumberFromCubes(string line)
     {
-        string[] splitLines = SplitAndTrim(" ", line);
+        string[] splitLines = Utilities.SplitAndTrim(" ", line);
         int number = int.Parse(splitLines[0]);
         string color = splitLines[1];
 
         return (color, number);
-    }
-
-    public static string[] SplitAndTrim(string seperator, string line)
-    {
-        return line.Split(seperator).Select(x => x.Trim()).ToArray();
     }
 }

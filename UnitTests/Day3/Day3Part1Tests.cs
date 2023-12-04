@@ -52,7 +52,7 @@ public class Day3Part1Tests
             Dictionary<int, int> row = adjacentNumbers[i];
             Dictionary<int, int> expectedRow = expectedAdjacentNumbers[i];
 
-            Utilities.AssertDictionaryAreEqual(row, expectedRow);
+            TestUtilities.AssertDictionaryAreEqual(row, expectedRow);
         }
     }
 
@@ -116,7 +116,7 @@ public class Day3Part1Tests
             Dictionary<int, int> row = adjacentNumbers[i];
             Dictionary<int, int> expectedRow = expectedAdjacentNumbers[i];
 
-            Utilities.AssertDictionaryAreEqual(row, expectedRow);
+            TestUtilities.AssertDictionaryAreEqual(row, expectedRow);
         }
     }
 
