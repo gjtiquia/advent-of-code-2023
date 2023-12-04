@@ -55,10 +55,128 @@ public class Day3Tests
             Utilities.AssertDictionaryAreEqual(row, expectedRow);
         }
     }
+
+    [Test]
+    public void ShouldFindNumbersAdjacentToAllSymbols()
+    {
+        // Specified in .csproj to include and copy to bin folder where the test is executed
+        string currentDirectory = TestContext.CurrentContext.TestDirectory;
+        string filePath = Path.Combine(currentDirectory, "Day3", "a.txt");
+
+        string[] lines = File.ReadAllLines(filePath);
+        List<Dictionary<int, int>> adjacentNumbers = Day3Parser.FindNumbersAdjacentToAllSymbols(lines);
+
+        List<Dictionary<int, int>> expectedAdjacentNumbers =
+        [
+            new Dictionary<int, int>()
+            {
+                {0, 467}
+            },
+            new Dictionary<int, int>()
+            {
+
+            },
+            new Dictionary<int, int>()
+            {
+                {2, 35}, {6, 633}
+            },
+            new Dictionary<int, int>()
+            {
+
+            },
+            new Dictionary<int, int>()
+            {
+                {0, 617}
+            },
+            new Dictionary<int, int>()
+            {
+
+            },
+            new Dictionary<int, int>()
+            {
+                {2, 592}
+            },
+            new Dictionary<int, int>()
+            {
+                {6, 755}
+            },
+            new Dictionary<int, int>()
+            {
+
+            },
+            new Dictionary<int, int>()
+            {
+                {1, 664}, {5, 598}
+            },
+        ];
+
+        Assert.That(adjacentNumbers.Count, Is.EqualTo(expectedAdjacentNumbers.Count));
+        for (int i = 0; i < adjacentNumbers.Count; i++)
+        {
+            Dictionary<int, int> row = adjacentNumbers[i];
+            Dictionary<int, int> expectedRow = expectedAdjacentNumbers[i];
+
+            Utilities.AssertDictionaryAreEqual(row, expectedRow);
+        }
+    }
 }
 
 public class Day3Parser
 {
+    public static List<Dictionary<int, int>> FindNumbersAdjacentToAllSymbols(string[] lines)
+    {
+        List<Dictionary<int, int>> adjacentNumbers = [];
+        for (int i = 0; i < lines.Length; i++)
+            adjacentNumbers.Add([]);
+
+        for (int symbolRowIndex = 0; symbolRowIndex < lines.Length; symbolRowIndex++)
+        {
+            string topRow = symbolRowIndex == 0 ? "" : lines[symbolRowIndex - 1];
+            string currentRow = lines[symbolRowIndex];
+            string bottomRow = symbolRowIndex == lines.Length - 1 ? "" : lines[symbolRowIndex + 1];
+
+            int[] symbolIndexes = FindIndexesOfSymbols(currentRow);
+            foreach (int symbolIndex in symbolIndexes)
+            {
+                List<Dictionary<int, int>> adjacentNumbersToSymbol = FindAdjacentNumbersOfSymbol(topRow, currentRow, bottomRow, symbolIndex);
+                for (int relativeRowIndex = 0; relativeRowIndex < 3; relativeRowIndex++)
+                {
+                    Dictionary<int, int> adjacentNumbersInRow = adjacentNumbersToSymbol[relativeRowIndex];
+                    int absoluteRowIndex = -1;
+
+                    // Relative top row
+                    if (relativeRowIndex == 0)
+                    {
+                        // If at top edge, ignore relative top row
+                        if (symbolRowIndex == 0) continue;
+
+                        absoluteRowIndex = symbolRowIndex - 1;
+                    }
+
+                    // Relative current row
+                    else if (relativeRowIndex == 1)
+                    {
+                        absoluteRowIndex = symbolRowIndex;
+                    }
+
+                    // Relative bottom row
+                    else if (relativeRowIndex == 2)
+                    {
+                        // If at bottom edge, ignore relative bottom row
+                        if (symbolRowIndex == lines.Length - 1) continue;
+
+                        absoluteRowIndex = symbolRowIndex + 1;
+                    }
+
+                    foreach (var (index, number) in adjacentNumbersInRow)
+                        adjacentNumbers[absoluteRowIndex].TryAdd(index, number);
+                }
+            }
+        }
+
+        return adjacentNumbers;
+    }
+
     public static List<Dictionary<int, int>> FindAdjacentNumbersOfSymbol(string topRow, string currentRow, string bottomRow, int symbolIndex)
     {
         List<Dictionary<int, int>> adjacentNumbers =
