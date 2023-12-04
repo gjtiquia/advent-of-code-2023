@@ -1,3 +1,5 @@
+using AdventOfCode.Day3;
+
 namespace UnitTests;
 
 public class Day3Part1Tests

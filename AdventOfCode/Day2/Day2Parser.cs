@@ -1,3 +1,5 @@
+namespace AdventOfCode.Day2;
+
 public class Day2Parser
 {
     public static int GetSumOfPowerOfGames(string[] gameLines)

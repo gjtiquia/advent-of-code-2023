@@ -1,3 +1,5 @@
+namespace AdventOfCode.Day3;
+
 public class Day3Parser
 {
     public static int FindSumOfAllGearRatios(string[] lines)

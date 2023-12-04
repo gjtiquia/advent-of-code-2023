@@ -1,3 +1,5 @@
+namespace AdventOfCode.Day1;
+
 public class Day1Parser
 {
     public static int GetSumOfCalibrationValue(string[] lines)
