@@ -24,4 +24,17 @@ public class Day3Day2Tests
         Assert.That(hasGearRatio, Is.True);
         Assert.That(gearRatio, Is.EqualTo(16345));
     }
+
+    [TestCase(467835)]
+    public void ShouldFindSumOfAllGearRatios(int expectedSum)
+    {
+        // Specified in .csproj to include and copy to bin folder where the test is executed
+        string currentDirectory = TestContext.CurrentContext.TestDirectory;
+        string filePath = Path.Combine(currentDirectory, "Day3", "a.txt");
+
+        string[] lines = File.ReadAllLines(filePath);
+        int sum = Day3Parser.FindSumOfAllGearRatios(lines);
+
+        Assert.That(sum, Is.EqualTo(expectedSum));
+    }
 }

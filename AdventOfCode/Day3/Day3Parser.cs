@@ -1,5 +1,28 @@
 public class Day3Parser
 {
+    public static int FindSumOfAllGearRatios(string[] lines)
+    {
+        int sum = 0;
+
+        for (int gearRowIndex = 0; gearRowIndex < lines.Length; gearRowIndex++)
+        {
+            string topRow = gearRowIndex == 0 ? "" : lines[gearRowIndex - 1];
+            string currentRow = lines[gearRowIndex];
+            string bottomRow = gearRowIndex == lines.Length - 1 ? "" : lines[gearRowIndex + 1];
+
+            int[] gearIndexes = FindIndexesOfGear(currentRow);
+            foreach (int gearIndex in gearIndexes)
+            {
+                bool hasGearRatio = TryFindGearRatioOfGear(topRow, currentRow, bottomRow, gearIndex, out int gearRatio);
+                if (!hasGearRatio) continue;
+
+                sum += gearRatio;
+            }
+        }
+
+        return sum;
+    }
+
     public static bool TryFindGearRatioOfGear(string topRow, string currentRow, string bottomRow, int gearIndex, out int gearRatio)
     {
         int partNumberCount = 0;
