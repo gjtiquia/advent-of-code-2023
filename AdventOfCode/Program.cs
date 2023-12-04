@@ -27,5 +27,6 @@ Console.WriteLine($"Day 3 Part 2: {Day3Parser.FindSumOfAllGearRatios(day3Input)}
 // Day4
 string[] day4Input = File.ReadAllLines($"{baseDirectory}/Day4/input.txt");
 Console.WriteLine($"Day 4 Part 1: {Day4Parser.GetSumOfPoints(day4Input)}");
+Console.WriteLine($"Day 4 Part 2: {Day4Parser.GetTotalScratchcards(day4Input)}");
 
 
