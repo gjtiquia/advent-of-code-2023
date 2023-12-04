@@ -23,6 +23,33 @@ public class Day4Tests
 
         Assert.That(pointValue, Is.EqualTo(expectedPointValue));
     }
+
+    [TestCase(13)]
+    public void GetSumOfPoints(int expectedSum)
+    {
+        // Specified in .csproj to include and copy to bin folder where the test is executed
+        string currentDirectory = TestContext.CurrentContext.TestDirectory;
+        string filePath = Path.Combine(currentDirectory, "Day4", "input.txt");
+
+        string[] lines = File.ReadAllLines(filePath);
+        int sum = Day4Parser.GetSumOfPoints(lines);
+
+        Assert.That(sum, Is.EqualTo(expectedSum));
+    }
+}
+
+public static class Day4Parser
+{
+    public static int GetSumOfPoints(string[] lines)
+    {
+        int sum = 0;
+        foreach (string line in lines)
+        {
+            Card card = new Card(line);
+            sum += card.GetPointValue();
+        }
+        return sum;
+    }
 }
 
 public class Card
