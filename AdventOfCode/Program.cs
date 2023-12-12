@@ -2,7 +2,7 @@
 using AdventOfCode.Day2;
 using AdventOfCode.Day3;
 using AdventOfCode.Day4;
-
+using AdventOfCode.Day5;
 
 string baseDirectory = "./AdventOfCode";
 
@@ -28,5 +28,9 @@ Console.WriteLine($"Day 3 Part 2: {Day3Parser.FindSumOfAllGearRatios(day3Input)}
 string[] day4Input = File.ReadAllLines($"{baseDirectory}/Day4/input.txt");
 Console.WriteLine($"Day 4 Part 1: {Day4Parser.GetSumOfPoints(day4Input)}");
 Console.WriteLine($"Day 4 Part 2: {Day4Parser.GetTotalScratchcards(day4Input)}");
+
+// Day5
+string[] day5Input = File.ReadAllLines($"{baseDirectory}/Day5/input.txt");
+Console.WriteLine($"Day 5 Part 1: {Day5Parser.GetNearestLocation(day5Input)}");
 
 

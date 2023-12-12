@@ -12,7 +12,7 @@ public class Day5Tests
         string filePath = Path.Combine(currentDirectory, "Day5", "input.txt");
 
         string[] lines = File.ReadAllLines(filePath);
-        int nearestLocation = Day5Parser.GetNearestLocation(lines);
+        double nearestLocation = Day5Parser.GetNearestLocation(lines);
 
         Assert.That(nearestLocation, Is.EqualTo(35));
     }
@@ -21,7 +21,7 @@ public class Day5Tests
     public void ShouldMapToItselfByDefault()
     {
         Map map = new Map();
-        int destination = map.SourceToDestination(3);
+        double destination = map.SourceToDestination(3);
 
         Assert.That(destination, Is.EqualTo(3));
     }

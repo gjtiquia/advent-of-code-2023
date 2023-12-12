@@ -2,9 +2,9 @@ namespace AdventOfCode.Day5;
 
 public static class Day5Parser
 {
-    public static int GetNearestLocation(string[] lines)
+    public static double GetNearestLocation(string[] lines)
     {
-        List<int> seeds = new List<int>();
+        List<double> seeds = new List<double>();
         List<Map> maps = new List<Map>();
 
         foreach (string line in lines)
@@ -27,11 +27,11 @@ public static class Day5Parser
             currentMap.ParseAndAddRange(line);
         }
 
-        int nearestLocation = int.MaxValue;
+        double nearestLocation = double.MaxValue;
 
-        foreach (int seed in seeds)
+        foreach (double seed in seeds)
         {
-            int mappedValue = seed;
+            double mappedValue = seed;
             foreach (Map map in maps)
             {
                 mappedValue = map.SourceToDestination(mappedValue);
@@ -44,15 +44,15 @@ public static class Day5Parser
         return nearestLocation;
     }
 
-    public static List<int> ParseLineForSeeds(string line)
+    public static List<double> ParseLineForSeeds(string line)
     {
         string[] splitLines = Utilities.SplitAndTrim(":", line);
         string[] splitNumbers = Utilities.SplitAndTrim(" ", splitLines[1]);
 
-        List<int> seeds = [];
+        List<double> seeds = [];
         foreach (string number in splitNumbers)
         {
-            seeds.Add(int.Parse(number));
+            seeds.Add(double.Parse(number));
         }
 
         return seeds;
@@ -69,7 +69,7 @@ public class Map
         _ranges.Add(range);
     }
 
-    public int SourceToDestination(int source)
+    public double SourceToDestination(double source)
     {
         foreach (Range range in _ranges)
         {
@@ -86,20 +86,20 @@ public class Map
 
 public class Range
 {
-    private int _destinationRangeStart;
-    private int _sourceRangeStart;
-    private int _rangeLength;
+    private double _destinationRangeStart;
+    private double _sourceRangeStart;
+    private double _rangeLength;
 
     public Range(string line)
     {
         string[] splitLines = Utilities.SplitAndTrim(" ", line);
 
-        _destinationRangeStart = int.Parse(splitLines[0]);
-        _sourceRangeStart = int.Parse(splitLines[1]);
-        _rangeLength = int.Parse(splitLines[2]);
+        _destinationRangeStart = double.Parse(splitLines[0]);
+        _sourceRangeStart = double.Parse(splitLines[1]);
+        _rangeLength = double.Parse(splitLines[2]);
     }
 
-    public bool IsSourceWithinRange(int source)
+    public bool IsSourceWithinRange(double source)
     {
         if (source < _sourceRangeStart)
             return false;
@@ -111,9 +111,9 @@ public class Range
         return true;
     }
 
-    public int SourceToDestination(int source)
+    public double SourceToDestination(double source)
     {
-        int difference = source - _sourceRangeStart;
+        double difference = source - _sourceRangeStart;
         return _destinationRangeStart + difference;
     }
 }
