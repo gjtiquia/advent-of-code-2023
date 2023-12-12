@@ -14,7 +14,7 @@ public class Day5Tests
         string[] lines = File.ReadAllLines(filePath);
         double nearestLocation = Day5Parser.GetNearestLocation(lines);
 
-        Assert.That(nearestLocation, Is.EqualTo(35));
+        Assert.That(nearestLocation, Is.EqualTo(46));
     }
 
     [Test]

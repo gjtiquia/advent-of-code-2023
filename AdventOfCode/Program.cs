@@ -31,6 +31,8 @@ Console.WriteLine($"Day 4 Part 2: {Day4Parser.GetTotalScratchcards(day4Input)}")
 
 // Day5
 string[] day5Input = File.ReadAllLines($"{baseDirectory}/Day5/input.txt");
-Console.WriteLine($"Day 5 Part 1: {Day5Parser.GetNearestLocation(day5Input)}");
+Console.WriteLine($"Day 5 Part 1: (Invalid due to change of requirements in Part 2)");
+// ulong nearestLocation = Day5Parser.GetNearestLocation(day5Input); // Took about 50min on 2019 Intel MacBook Pro on battery
+Console.WriteLine($"Day 5 Part 2: (Skipped because calculated by Brute Force)");
 
 
