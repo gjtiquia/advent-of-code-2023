@@ -27,6 +27,7 @@
     <Content Include=".\Day2\input.txt" Link="Day2\input.txt" CopyToOutputDirectory="PreserveNewest" />
     <Content Include=".\Day3\a.txt" Link="Day3\a.txt" CopyToOutputDirectory="PreserveNewest" />
     <Content Include=".\Day4\input.txt" Link="Day4\input.txt" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include=".\Day5\input.txt" Link="Day5\input.txt" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
