@@ -14,9 +14,25 @@ public class Day7Tests
         Hand hand = new Hand(line);
         Assert.That(hand.GetHandType(), Is.EqualTo(expectedType));
     }
+
+    [TestCase("AAAAA", "AA8AA")]
+    [TestCase("33332", "2AAAA")]
+    [TestCase("77888", "77788")]
+    public void ShouldCompareCorrectly(string strongerLine, string weakerLine)
+    {
+        Hand strongerHand = new Hand(strongerLine);
+        Hand weakerHand = new Hand(weakerLine);
+
+        List<Hand> hands = [strongerHand, weakerHand];
+
+        // Sorts weak to strong, ascending order
+        hands.Sort();
+
+        Assert.That(hands[0], Is.EqualTo(weakerHand));
+    }
 }
 
-public class Hand
+public class Hand : IComparable
 {
     private string _hand;
 
@@ -84,11 +100,64 @@ public class Hand
 
         return EHandType.HighCard;
     }
+
+    public int CompareTo(object? obj)
+    {
+        if (obj is not Hand)
+            return 1;
+
+        Hand otherHand = (Hand)obj;
+
+        EHandType thisHandType = GetHandType();
+        EHandType otherHandType = otherHand.GetHandType();
+
+        if ((int)thisHandType < (int)otherHandType)
+            return 1;
+
+        for (int i = 0; i < _hand.Length; i++)
+        {
+            char thisChar = _hand[i];
+            char otherChar = otherHand._hand[i];
+
+            int thisRanking = GetCharRanking(thisChar);
+            int otherRanking = GetCharRanking(otherChar);
+
+            if (thisRanking == otherRanking)
+                continue;
+
+            if (thisRanking > otherRanking)
+                return 1;
+
+            return -1;
+        }
+
+        return 0;
+    }
+
+    private int GetCharRanking(char c)
+    {
+        string charString = c.ToString();
+
+        switch (charString)
+        {
+            case "A": return 14;
+            case "K": return 13;
+            case "Q": return 12;
+            case "J": return 11;
+            case "T": return 10;
+        }
+
+        // 9 to 2 returns the inteer value
+        if (int.TryParse(charString, out int result))
+            return result;
+
+        return 0;
+    }
 }
 
 public enum EHandType
 {
-    FiveOfAKind,
+    FiveOfAKind = 0,
     FourOfAKind,
     FullHouse,
     ThreeOfAKind,
