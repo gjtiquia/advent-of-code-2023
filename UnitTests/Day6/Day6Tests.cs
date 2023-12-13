@@ -29,6 +29,27 @@ public class Day6Tests
             Assert.That(distances.Count, Is.EqualTo(3));
         });
     }
+
+    [TestCase(7, 9, 4)]
+    [TestCase(15, 40, 8)]
+    [TestCase(30, 200, 9)]
+    public void ShouldFindNumberOfWaysToWin(int time, int distance, int expectedWaysToWin)
+    {
+        int waysToWin = 0;
+
+        for (int i = 0; i <= time; i++)
+        {
+            int timeHeld = i;
+            int speedToMove = timeHeld;
+            int timeMoved = time - timeHeld;
+            int distanceMoved = timeMoved * speedToMove;
+
+            if (distanceMoved > distance)
+                waysToWin++;
+        }
+
+        Assert.That(waysToWin, Is.EqualTo(expectedWaysToWin));
+    }
 }
 
 public static class Day6Parser
