@@ -3,6 +3,7 @@ using AdventOfCode.Day2;
 using AdventOfCode.Day3;
 using AdventOfCode.Day4;
 using AdventOfCode.Day5;
+using AdventOfCode.Day6;
 
 string baseDirectory = "./AdventOfCode";
 
@@ -35,4 +36,7 @@ Console.WriteLine($"Day 5 Part 1: (Invalid due to change of requirements in Part
 // ulong nearestLocation = Day5Parser.GetNearestLocation(day5Input); // Took about 50min on 2019 Intel MacBook Pro on battery
 Console.WriteLine($"Day 5 Part 2: (Skipped because calculated by Brute Force)");
 
+// Day6
+string[] day6Input = File.ReadAllLines($"{baseDirectory}/Day6/input.txt");
+Console.WriteLine($"Day 6 Part 1: {Day6Parser.FindProductOfWaysToWin(day6Input)}");
 

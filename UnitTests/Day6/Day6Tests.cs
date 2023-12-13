@@ -1,9 +1,11 @@
+using AdventOfCode.Day6;
+
 namespace UnitTests;
 
 public class Day6Tests
 {
     [Test]
-    public void CanParseCorrectly()
+    public void ShouldFindProductOfWaysToWinFromTestInput()
     {
         // Specified in .csproj to include and copy to bin folder where the test is executed
         string currentDirectory = TestContext.CurrentContext.TestDirectory;
@@ -11,23 +13,8 @@ public class Day6Tests
 
         string[] lines = File.ReadAllLines(filePath);
 
-        List<int> times = [];
-        List<int> distances = [];
-
-        foreach (string line in lines)
-        {
-            if (line.Contains("Time:"))
-                times = Day6Parser.ParseNumbers(line);
-
-            if (line.Contains("Distance:"))
-                distances = Day6Parser.ParseNumbers(line);
-        }
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(times.Count, Is.EqualTo(3));
-            Assert.That(distances.Count, Is.EqualTo(3));
-        });
+        int productOfWaysToWin = Day6Parser.FindProductOfWaysToWin(lines);
+        Assert.That(productOfWaysToWin, Is.EqualTo(288));
     }
 
     [TestCase(7, 9, 4)]
@@ -35,39 +22,7 @@ public class Day6Tests
     [TestCase(30, 200, 9)]
     public void ShouldFindNumberOfWaysToWin(int time, int distance, int expectedWaysToWin)
     {
-        int waysToWin = 0;
-
-        for (int i = 0; i <= time; i++)
-        {
-            int timeHeld = i;
-            int speedToMove = timeHeld;
-            int timeMoved = time - timeHeld;
-            int distanceMoved = timeMoved * speedToMove;
-
-            if (distanceMoved > distance)
-                waysToWin++;
-        }
-
+        int waysToWin = Day6Parser.FindNumberOfWaysToWin(time, distance);
         Assert.That(waysToWin, Is.EqualTo(expectedWaysToWin));
-    }
-}
-
-public static class Day6Parser
-{
-    public static List<int> ParseNumbers(string line)
-    {
-        string[] splitLines = Utilities.SplitAndTrim(":", line);
-        string[] numberLine = Utilities.SplitAndTrim(" ", splitLines[1]);
-
-        List<int> numbers = [];
-        foreach (string element in numberLine)
-        {
-            if (!int.TryParse(element, out int result))
-                continue;
-
-            numbers.Add(result);
-        }
-
-        return numbers;
     }
 }
