@@ -4,6 +4,13 @@ namespace UnitTests;
 
 public class Day6Tests
 {
+    [TestCase("Time:      7  15   30", 71530)]
+    public void ShouldParseNumbersTogether(string line, int expectedNumber)
+    {
+        long number = Day6Parser.ParseNumbersTogether(line);
+        Assert.That(number, Is.EqualTo(expectedNumber));
+    }
+
     [Test]
     public void ShouldFindProductOfWaysToWinFromTestInput()
     {
@@ -13,16 +20,17 @@ public class Day6Tests
 
         string[] lines = File.ReadAllLines(filePath);
 
-        int productOfWaysToWin = Day6Parser.FindProductOfWaysToWin(lines);
+        long productOfWaysToWin = Day6Parser.FindProductOfWaysToWin(lines);
         Assert.That(productOfWaysToWin, Is.EqualTo(288));
     }
 
     [TestCase(7, 9, 4)]
     [TestCase(15, 40, 8)]
     [TestCase(30, 200, 9)]
+    [TestCase(71530, 940200, 71503)]
     public void ShouldFindNumberOfWaysToWin(int time, int distance, int expectedWaysToWin)
     {
-        int waysToWin = Day6Parser.FindNumberOfWaysToWin(time, distance);
+        long waysToWin = Day6Parser.FindNumberOfWaysToWin(time, distance);
         Assert.That(waysToWin, Is.EqualTo(expectedWaysToWin));
     }
 }

@@ -2,7 +2,24 @@ namespace AdventOfCode.Day6;
 
 public static class Day6Parser
 {
-    public static int FindProductOfWaysToWin(string[] lines)
+    public static long FindWaysToWinFromLongRace(string[] lines)
+    {
+        long time = 0;
+        long distance = 0;
+
+        foreach (string line in lines)
+        {
+            if (line.Contains("Time:"))
+                time = ParseNumbersTogether(line);
+
+            if (line.Contains("Distance:"))
+                distance = ParseNumbersTogether(line);
+        }
+
+        return FindNumberOfWaysToWin(time, distance);
+    }
+
+    public static long FindProductOfWaysToWin(string[] lines)
     {
         List<int> times = [];
         List<int> distances = [];
@@ -10,34 +27,34 @@ public static class Day6Parser
         foreach (string line in lines)
         {
             if (line.Contains("Time:"))
-                times = Day6Parser.ParseNumbers(line);
+                times = ParseNumbersSeperately(line);
 
             if (line.Contains("Distance:"))
-                distances = Day6Parser.ParseNumbers(line);
+                distances = ParseNumbersSeperately(line);
         }
 
-        int productOfWaysToWin = 1;
+        long productOfWaysToWin = 1;
         for (int i = 0; i < times.Count; i++)
         {
             int time = times[i];
             int distance = distances[i];
 
-            productOfWaysToWin *= Day6Parser.FindNumberOfWaysToWin(time, distance);
+            productOfWaysToWin *= FindNumberOfWaysToWin(time, distance);
         }
 
         return productOfWaysToWin;
     }
 
-    public static int FindNumberOfWaysToWin(int time, int distance)
+    public static long FindNumberOfWaysToWin(long time, long distance)
     {
-        int waysToWin = 0;
+        long waysToWin = 0;
 
-        for (int i = 0; i <= time; i++)
+        for (long i = 0; i <= time; i++)
         {
-            int timeHeld = i;
-            int speedToMove = timeHeld;
-            int timeMoved = time - timeHeld;
-            int distanceMoved = timeMoved * speedToMove;
+            long timeHeld = i;
+            long speedToMove = timeHeld;
+            long timeMoved = time - timeHeld;
+            long distanceMoved = timeMoved * speedToMove;
 
             if (distanceMoved > distance)
                 waysToWin++;
@@ -46,7 +63,15 @@ public static class Day6Parser
         return waysToWin;
     }
 
-    public static List<int> ParseNumbers(string line)
+    public static long ParseNumbersTogether(string line)
+    {
+        string[] splitLines = Utilities.SplitAndTrim(":", line);
+        string numberLine = splitLines[1].Replace(" ", "");
+
+        return long.Parse(numberLine);
+    }
+
+    public static List<int> ParseNumbersSeperately(string line)
     {
         string[] splitLines = Utilities.SplitAndTrim(":", line);
         string[] numberLine = Utilities.SplitAndTrim(" ", splitLines[1]);

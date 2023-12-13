@@ -39,4 +39,5 @@ Console.WriteLine($"Day 5 Part 2: (Skipped because calculated by Brute Force)");
 // Day6
 string[] day6Input = File.ReadAllLines($"{baseDirectory}/Day6/input.txt");
 Console.WriteLine($"Day 6 Part 1: {Day6Parser.FindProductOfWaysToWin(day6Input)}");
+Console.WriteLine($"Day 6 Part 2: {Day6Parser.FindWaysToWinFromLongRace(day6Input)}");
 
