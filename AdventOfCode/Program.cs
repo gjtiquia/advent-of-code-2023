@@ -44,4 +44,5 @@ Console.WriteLine($"Day 6 Part 2: {Day6Parser.FindWaysToWinFromLongRace(day6Inpu
 
 // Day 7
 string[] day7Input = File.ReadAllLines($"{baseDirectory}/Day7/input.txt");
-Console.WriteLine($"Day 7 Part 1: {Day7Parser.CalculateWinnings(day7Input)}");
+Console.WriteLine($"Day 7 Part 1: (Invalid due to change of requirements in Part 2)");
+Console.WriteLine($"Day 7 Part 2: {Day7Parser.CalculateWinnings(day7Input)}");

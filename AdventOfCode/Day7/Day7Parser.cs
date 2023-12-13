@@ -59,43 +59,151 @@ public class Hand : IComparable<Hand>
             characterOccurences.Add(a, occurences);
         }
 
+        // Only 1 kind of card, regardless if wild card or not, FiveOfAKind
         if (characterOccurences.Count == 1 && characterOccurences.First().Value == 5)
             return EHandType.FiveOfAKind;
 
+        // 2 kinds of cards
         if (characterOccurences.Count == 2)
         {
-            foreach (var (_, occurences) in characterOccurences)
-            {
-                if (occurences == 4)
-                    return EHandType.FourOfAKind;
+            int numberOfWildCards = 0;
+            EHandType potentialHandType = EHandType.HighCard;
 
+            foreach (var (character, occurences) in characterOccurences)
+            {
+                if (character.ToString() == "J")
+                    numberOfWildCards = occurences;
+
+                // AAAAJ
+                // JJJJA
+                // AAAAB
+                if (occurences == 4)
+                    potentialHandType = EHandType.FourOfAKind;
+
+                // AAAJJ
+                // JJJAA
+                // AAABB
                 if (occurences == 3)
-                    return EHandType.FullHouse;
+                    potentialHandType = EHandType.FullHouse;
+            }
+
+            if (potentialHandType == EHandType.FourOfAKind)
+            {
+                // AAAAJ
+                // JJJJA
+                if (numberOfWildCards > 0)
+                    return EHandType.FiveOfAKind;
+
+                // AAAAB
+                return EHandType.FourOfAKind;
+            }
+
+            if (potentialHandType == EHandType.FullHouse)
+            {
+                // AAAJJ
+                // JJJAA
+                if (numberOfWildCards > 0)
+                    return EHandType.FiveOfAKind;
+
+                // AAABB
+                return EHandType.FullHouse;
             }
         }
 
         if (characterOccurences.Count == 3)
         {
-            foreach (var (_, occurences) in characterOccurences)
+            int numberOfWildCards = 0;
+            EHandType potentialHandType = EHandType.HighCard;
+
+            foreach (var (character, occurences) in characterOccurences)
             {
+                if (character.ToString() == "J")
+                    numberOfWildCards = occurences;
+
+                // AABBC
+                // JJAAC
+                // AABBJ
+                if (occurences == 2)
+                    potentialHandType = EHandType.TwoPair;
+
+                // AAABC
+                // JJJAB
+                // AAAJB
                 if (occurences == 3)
-                    return EHandType.ThreeOfAKind;
+                    potentialHandType = EHandType.ThreeOfAKind;
+            }
+
+            if (potentialHandType == EHandType.TwoPair)
+            {
+                // JJAAC
+                if (numberOfWildCards == 2)
+                    return EHandType.FourOfAKind;
+
+                // AABBJ
+                if (numberOfWildCards == 1)
+                    return EHandType.FullHouse;
+
+                // AABBC
+                return EHandType.TwoPair;
+            }
+
+            if (potentialHandType == EHandType.ThreeOfAKind)
+            {
+                // JJJAB
+                // AAAJB
+                if (numberOfWildCards > 0)
+                    return EHandType.FourOfAKind;
+
+                // AAABC
+                return EHandType.ThreeOfAKind;
             }
         }
 
-        int numberOfPairs = 0;
-        foreach (var (_, occurences) in characterOccurences)
+        if (characterOccurences.Count == 4)
         {
-            if (occurences == 2)
-                numberOfPairs++;
-        }
+            int numberOfWildCards = 0;
 
-        if (numberOfPairs == 2)
-            return EHandType.TwoPair;
+            foreach (var (character, occurences) in characterOccurences)
+            {
+                if (character.ToString() == "J")
+                    numberOfWildCards = occurences;
+            }
 
-        if (numberOfPairs == 1)
+            // ABCDD
+            // JABCC
+            // ABCJJ
+
+            // JABCC
+            // ABCJJ
+            if (numberOfWildCards > 0)
+                return EHandType.ThreeOfAKind;
+
+            // ABCDD
             return EHandType.OnePair;
 
+        }
+
+        if (characterOccurences.Count == 5)
+        {
+            int numberOfWildCards = 0;
+
+            foreach (var (character, occurences) in characterOccurences)
+            {
+                if (character.ToString() == "J")
+                    numberOfWildCards = occurences;
+            }
+
+            // ABCDE
+            // ABCDJ
+
+            // ABCDJ
+            if (numberOfWildCards == 1)
+            {
+                return EHandType.OnePair;
+            }
+        }
+
+        // ABCDE
         return EHandType.HighCard;
     }
 
@@ -144,7 +252,11 @@ public class Hand : IComparable<Hand>
             case "A": return 14;
             case "K": return 13;
             case "Q": return 12;
-            case "J": return 11;
+
+            // Wildcard requirement
+            // case "J": return 11;
+            case "J": return 1;
+
             case "T": return 10;
         }
 
@@ -152,7 +264,7 @@ public class Hand : IComparable<Hand>
         if (int.TryParse(charString, out int result))
             return result;
 
-        return 0;
+        throw new InvalidOperationException($"Do not know ranking of character {charString}!");
     }
 }
 
