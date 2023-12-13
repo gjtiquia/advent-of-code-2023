@@ -4,6 +4,7 @@ using AdventOfCode.Day3;
 using AdventOfCode.Day4;
 using AdventOfCode.Day5;
 using AdventOfCode.Day6;
+using AdventOfCode.Day7;
 
 string baseDirectory = "./AdventOfCode";
 
@@ -41,3 +42,6 @@ string[] day6Input = File.ReadAllLines($"{baseDirectory}/Day6/input.txt");
 Console.WriteLine($"Day 6 Part 1: {Day6Parser.FindProductOfWaysToWin(day6Input)}");
 Console.WriteLine($"Day 6 Part 2: {Day6Parser.FindWaysToWinFromLongRace(day6Input)}");
 
+// Day 7
+string[] day7Input = File.ReadAllLines($"{baseDirectory}/Day7/input.txt");
+Console.WriteLine($"Day 7 Part 1: {Day7Parser.CalculateWinnings(day7Input)}");
